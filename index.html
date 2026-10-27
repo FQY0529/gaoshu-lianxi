@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>不定积分与换元积分法・专项训练</title>
+    <title>第4章 4.1 不定积分 · 习题4-1 训练与解答</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -35,7 +35,7 @@
         }
         header {
             position: relative;
-            margin-bottom: 24px;
+            margin-bottom: 18px;
             padding:18px 20px;
             border-radius:12px;
             background-color:#ffffff;
@@ -54,7 +54,7 @@
         h1 {
             color: #01579b;
             margin-bottom: 8px;
-            font-size: 2.4rem;
+            font-size: clamp(1.5rem, 5vw, 2.4rem);
             letter-spacing: 1px;
         }
         .title-icon{
@@ -62,7 +62,22 @@
         }
         .subtitle {
             color: #2c5278;
-            font-size: 1.15rem;
+            font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+        }
+        /* 视图切换标签 */
+        .view-tabs{
+            display:flex;gap:12px;margin-bottom:20px;
+        }
+        .view-tab{
+            flex:1;padding:14px 10px;border-radius:12px;border:2px solid #d0dceb;
+            background:#ffffff;font-size:clamp(0.95rem,2.5vw,1.12rem);font-weight:600;color:#444;
+            cursor:pointer;text-align:center;transition:all .2s ease;
+            box-shadow:0 3px 6px rgba(0,40,80,0.1);
+        }
+        .view-tab:hover{transform:translateY(-2px);border-color:#0288d1;color:#0288d1;}
+        .view-tab.active{
+            background:#0288d1;border-color:#0288d1;color:#fff;
+            box-shadow:0 6px 12px rgba(2,136,209,0.35);transform:none;
         }
         .content {
             display: flex;
@@ -99,7 +114,7 @@
         h2 {
             color: #01579b;
             margin-bottom: 14px;
-            font-size: 1.45rem;
+            font-size: clamp(1.15rem, 3vw, 1.45rem);
             border-left: 5px solid #0288d1;
             padding:8px 12px;
             border-radius:8px;
@@ -107,7 +122,7 @@
             box-shadow: 0 0 6px rgba(2,136,209,0.12);
         }
         .problem {
-            font-size: 1.35rem;
+            font-size: clamp(1.08rem, 2.5vw, 1.35rem);
             line-height: 1.8;
             padding: 18px 20px;
             background-color: rgba(244, 247, 255, 0.65);
@@ -125,7 +140,7 @@
         }
         .choice-btn {
             padding: 16px 18px;
-            font-size: 1.2rem;
+            font-size: clamp(1.02rem, 2.5vw, 1.2rem);
             background-color: #ffffff;
             border: 2px solid #d0dceb;
             border-radius: 10px;
@@ -368,7 +383,7 @@
         }
         .stat-item { text-align: center; }
         .stat-value {
-            font-size: 2rem;
+            font-size: clamp(1.4rem, 4vw, 2rem);
             font-weight: bold;
             color: #01579b;
         }
@@ -459,38 +474,103 @@
             margin-top:12px;
             display:none;
         }
+        /* ===== 课后习题 4-1 ===== */
+        .hw-toolbar{
+            display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;
+        }
+        .hw-toolbar button{
+            flex:1;min-width:130px;padding:12px;border:none;border-radius:10px;
+            font-size:1rem;font-weight:600;cursor:pointer;transition:all .2s ease;
+            box-shadow:0 4px 8px rgba(0,40,80,0.16), 0 2px 4px rgba(0,0,0,0.08);
+        }
+        .hw-toolbar button:hover{transform:translateY(-2px);}
+        .hw-expand-all{background:#0288d1;color:#fff;}
+        .hw-collapse-all{background:#546e7a;color:#fff;}
+        .hw-group-title{
+            font-size:clamp(1.05rem,2.5vw,1.25rem);font-weight:700;color:#01579b;
+            background:#ffffff;border-left:5px solid #0288d1;border-radius:8px;
+            padding:10px 14px;margin:18px 0 12px 0;line-height:1.6;
+            box-shadow:0 2px 6px rgba(0,40,80,0.08);
+        }
+        .hw-item{
+            background:#ffffff;border:1px solid #dbe7f3;border-radius:10px;
+            padding:14px 16px;margin-bottom:10px;
+            box-shadow:0 2px 5px rgba(0,40,80,0.06);
+        }
+        .hw-q{
+            font-size:clamp(1rem,2.2vw,1.12rem);line-height:1.85;color:#222;
+        }
+        .hw-toggle{
+            margin-top:10px;padding:8px 18px;border:none;border-radius:999px;
+            background:#0288d1;color:#fff;font-size:0.92rem;font-weight:600;
+            cursor:pointer;transition:all .2s ease;box-shadow:0 3px 6px rgba(2,136,209,0.25);
+        }
+        .hw-toggle:hover{background:#0277bd;transform:translateY(-2px);}
+        .hw-solution{
+            display:none;margin-top:12px;padding:12px 14px;
+            background:#e8f4fc;border-left:4px solid #0288d1;border-radius:8px;
+            line-height:1.85;font-size:clamp(0.98rem,2.2vw,1.05rem);color:#1a3a52;
+        }
+        .hw-item.open .hw-solution{display:block;}
+        .hw-badge{
+            display:inline-block;background:#e3ecff;color:#01579b;
+            font-size:0.85rem;padding:2px 10px;border-radius:999px;
+            margin-right:8px;vertical-align:middle;font-weight:600;
+        }
         @media (max-width: 980px) {
-            .content { flex-direction: column; }
+            body{padding:12px;}
+            .container{padding:18px 14px;border-radius:12px;}
+            .content { flex-direction: column; gap:0; }
+            .controls-section{margin-top:18px;}
             .choices { grid-template-columns: 1fr; }
-            .medal-wrap{
-                flex-direction:column;
-            }
-            .difficulty-selector{
-                flex-direction:column;
-            }
-            .count-set-wrap{
-                flex-wrap:wrap;
-            }
+            .medal-wrap{flex-direction:column;}
+            .difficulty-selector{flex-direction:column;}
+            .count-set-wrap{flex-wrap:wrap;}
+            .card{padding:16px;}
+            .buttons{gap:8px;}
+            .buttons button{min-width:calc(50% - 8px);font-size:0.92rem;}
+            .answer-input{font-size:1.1rem;}
+            .view-tabs{gap:8px;}
+            .view-tab{padding:12px 6px;}
+            .hw-item{padding:12px;}
         }
         @media print{
             body{background:#fff;padding:0;}
             .container{background:#fff;backdrop-filter:none;box-shadow:none;}
             header{background:#fff !important;}
-            button,.template-panel,.collapsible-content{display:none !important;}
+            button,.template-panel,.collapsible-content,.view-tabs,.hw-toolbar{display:none !important;}
             .medal-wrap{display:none;}
             #fireworkCanvas{display:none !important;}
+            .hw-solution{display:block !important;}
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="header-brand">应用高等数学 · 第4章 专题训练</div>
+            <div class="header-brand">应用高等数学 · 第4章 不定积分（4.1）</div>
             <div class="header-title-wrap">
-                <h1><span class="title-icon">🧮</span> 不定积分与换元积分法 <span class="title-icon">🧮</span></h1>
-                <p class="subtitle">原函数与不定积分、基本积分公式、第一类换元（凑微分）、简单应用（4.1~4.2）</p>
+                <h1><span class="title-icon">🧮</span> 不定积分 · 习题4-1 <span class="title-icon">🧮</span></h1>
+                <p class="subtitle">课后习题4-1 全部解答 · 同步随机训练（直接积分法，未涉及换元积分）</p>
             </div>
         </header>
+
+        <div class="view-tabs">
+            <button class="view-tab active" id="tabHw">📚 课后习题 4-1（含解答）</button>
+            <button class="view-tab" id="tabPr">✍️ 同步练习（自动判分）</button>
+        </div>
+
+        <!-- ===== 课后习题 4-1 视图 ===== -->
+        <div id="homework-view">
+            <div class="hw-toolbar">
+                <button class="hw-expand-all" id="hwExpandAll">全部展开解答</button>
+                <button class="hw-collapse-all" id="hwCollapseAll">全部收起解答</button>
+            </div>
+            <div id="hwBox"></div>
+        </div>
+
+        <!-- ===== 同步练习视图 ===== -->
+        <div id="practice-view" style="display:none;">
         <div class="content">
             <section class="problem-section">
                 <div class="card">
@@ -522,13 +602,13 @@
                         <button class="reset-btn" id="reset-btn">重置统计</button>
                     </div>
                     <div class="template-panel" id="template-panel">
-                        <h4>不定积分解题通用模板</h4>
-                        <p>1. 观察被积函数：能否直接套用基本积分公式？（直接积分法）</p>
-                        <p>2. 不能直接套用时，找"函数+导数"搭配，凑微分：$\varphi'(x)\,dx = d\varphi(x)$（第一类换元）</p>
-                        <p>3. 常用凑微分：$x\,dx=\dfrac{1}{2}d(x^2)$，$\dfrac{dx}{x}=d(\ln x)$，$e^x dx=d(e^x)$，$\cos x\,dx=d(\sin x)$</p>
-                        <p>4. 换元 $u=\varphi(x)$ 化成基本公式，积分后必须回代成原变量</p>
-                        <p>5. 结果一律写 $+C$，可求导验证：$\left(\int f(x)dx\right)'=f(x)$</p>
-                        <p><strong>易错提醒：</strong>丢常数 $C$；$\int \frac{1}{x}dx=\ln|x|+C$ 丢绝对值；凑微分时系数丢失（$\int \cos 2x\,dx=\frac{1}{2}\sin 2x+C$，不是 $\sin 2x+C$）。</p>
+                        <h4>直接积分法解题通用模板（4.1）</h4>
+                        <p>1. 化简被积函数：根式、分式化成幂函数 $x^{\mu}$（如 $\sqrt{x}=x^{1/2}$，$\dfrac{1}{x^3}=x^{-3}$）</p>
+                        <p>2. 拆项：多项式展开、分式拆成若干项（分子逐项除以分母）</p>
+                        <p>3. 三角恒等变形：$\cos^2 x=\dfrac{1+\cos 2x}{2}$，$\sin^2 x=\dfrac{1-\cos 2x}{2}$，$1+\tan^2 x=\sec^2 x$，$1+\cot^2 x=\csc^2 x$，$\cos 2x=\cos^2 x-\sin^2 x$</p>
+                        <p>4. 逐项套用基本积分公式，结果一律写 $+C$</p>
+                        <p>5. 求导验证：$\left(\displaystyle\int f(x)dx\right)'=f(x)$</p>
+                        <p><strong>易错提醒：</strong>丢常数 $C$；$\int \frac{1}{x}dx=\ln|x|+C$ 丢绝对值；$\mu=-1$ 时套幂函数公式（应为 $\ln|x|$）；指数 $a^x$ 公式漏除以 $\ln a$。</p>
                     </div>
                     <div class="result" id="result"></div>
                 </div>
@@ -586,7 +666,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <h2>📖 知识要点</h2>
+                    <h2>📖 知识要点（4.1）</h2>
                     <div class="rules">
                         <h3>1. 原函数与不定积分</h3>
                         <ul>
@@ -594,45 +674,167 @@
                             <li>不定积分：$\displaystyle\int f(x)dx=F(x)+C$（$C$ 为任意常数）</li>
                             <li>连续函数必有原函数；任意两个原函数只差一个常数</li>
                         </ul>
-                        <h3>2. 基本积分公式（4.1）</h3>
+                        <h3>2. 积分与微分（求导）互逆</h3>
+                        <ul>
+                            <li>$\left[\displaystyle\int f(x)dx\right]'=f(x)$</li>
+                            <li>$d\left[\displaystyle\int f(x)dx\right]=f(x)dx$</li>
+                            <li>$\displaystyle\int F'(x)dx=F(x)+C$，$\displaystyle\int dF(x)=F(x)+C$</li>
+                            <li>先求导后积分，结果带 $C$；先积分后求导（微分），不带 $C$</li>
+                        </ul>
+                        <h3>3. 基本积分公式</h3>
                         <ul>
                             <li>$\displaystyle\int x^{\mu}\,dx=\dfrac{x^{\mu+1}}{\mu+1}+C$（$\mu\neq-1$）</li>
                             <li>$\displaystyle\int\dfrac{1}{x}dx=\ln|x|+C$</li>
                             <li>$\displaystyle\int e^x dx=e^x+C$，$\displaystyle\int a^x dx=\dfrac{a^x}{\ln a}+C$</li>
                             <li>$\displaystyle\int\sin x\,dx=-\cos x+C$，$\displaystyle\int\cos x\,dx=\sin x+C$</li>
                             <li>$\displaystyle\int\sec^2 x\,dx=\tan x+C$，$\displaystyle\int\csc^2 x\,dx=-\cot x+C$</li>
+                            <li>$\displaystyle\int\sec x\tan x\,dx=\sec x+C$，$\displaystyle\int\csc x\cot x\,dx=-\csc x+C$</li>
                             <li>$\displaystyle\int\dfrac{dx}{1+x^2}=\arctan x+C$，$\displaystyle\int\dfrac{dx}{\sqrt{1-x^2}}=\arcsin x+C$</li>
                         </ul>
-                        <h3>3. 常用凑微分（4.2 第一类换元）</h3>
+                        <h3>4. 不积分性质（线性）</h3>
                         <ul>
-                            <li>$x\,dx=\dfrac{1}{2}d(x^2)=\dfrac{1}{2a}d(ax^2+b)$</li>
-                            <li>$\dfrac{1}{\sqrt{x}}dx=2d(\sqrt{x})$</li>
-                            <li>$\dfrac{1}{x}dx=d(\ln|x|)$</li>
-                            <li>$e^x dx=d(e^x)$</li>
-                            <li>$\cos x\,dx=d(\sin x)$，$\sin x\,dx=-d(\cos x)$</li>
-                            <li>$\sec^2 x\,dx=d(\tan x)$</li>
+                            <li>$\displaystyle\int k f(x)dx=k\int f(x)dx$（$k\neq0$）</li>
+                            <li>$\displaystyle\int[f(x)\pm g(x)]dx=\int f(x)dx\pm\int g(x)dx$</li>
                         </ul>
-                        <h3>4. 解题步骤</h3>
+                        <h3>5. 直接积分法常用变形</h3>
                         <ul>
-                            <li>（1）判断能否直接套基本公式</li>
-                            <li>（2）找"被积函数 = 外函数 × 内函数导数"的结构，凑微分</li>
-                            <li>（3）换元积分，回代原变量，结果写 $+C$</li>
-                            <li>（4）对结果求导验证是否等于被积函数</li>
+                            <li>根式化幂：$\sqrt{x}=x^{1/2}$，$\sqrt{x^3}=x^{3/2}$</li>
+                            <li>拆项：$\dfrac{6x^3-2x^2+3x+5}{x^3}=6-\dfrac{2}{x}+\dfrac{3}{x^2}+\dfrac{5}{x^3}$</li>
+                            <li>三角恒等式：$\cos^2 x=\dfrac{1+\cos 2x}{2}$，$1+\tan^2x=\sec^2x$，$\cos 2x=\cos^2x-\sin^2x$</li>
+                            <li>因式分解：$e^{2x}-1=(e^x-1)(e^x+1)$</li>
                         </ul>
-                        <h3>5. 易错点提醒</h3>
+                        <h3>6. 易错点提醒</h3>
                         <ul>
                             <li>❌ 结果忘写 $+C$</li>
                             <li>❌ $\int\frac{1}{x}dx$ 丢绝对值写成 $\ln x+C$</li>
-                            <li>❌ 凑微分时系数丢失：$\int\cos 2x\,dx\neq\sin 2x+C$</li>
-                            <li>❌ 幂函数公式中 $\mu=-1$ 时仍套幂函数公式（应为 $\ln|x|$）</li>
+                            <li>❌ 幂函数公式中 $\mu=-1$ 时仍套幂函数公式</li>
+                            <li>❌ $\int a^x dx$ 漏除以 $\ln a$（如 $\int 4^x dx\neq 4^x+C$）</li>
                         </ul>
                     </div>
                 </div>
             </section>
         </div>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
     <script>
+        /* ================= 视图切换 ================= */
+        const tabHw = document.getElementById('tabHw');
+        const tabPr = document.getElementById('tabPr');
+        const hwView = document.getElementById('homework-view');
+        const prView = document.getElementById('practice-view');
+        function switchView(v){
+            if(v==='hw'){
+                tabHw.classList.add('active'); tabPr.classList.remove('active');
+                hwView.style.display='block'; prView.style.display='none';
+            }else{
+                tabPr.classList.add('active'); tabHw.classList.remove('active');
+                prView.style.display='block'; hwView.style.display='none';
+                setTimeout(()=>{ if(accChart) accChart.resize(); },50);
+            }
+        }
+        tabHw.addEventListener('click',()=>switchView('hw'));
+        tabPr.addEventListener('click',()=>switchView('pr'));
+
+        /* ================= 课后习题 4-1 数据 ================= */
+        const HOMEWORK = [
+            {
+                title:"一、验证下列等式是否成立（对等式右端求导，看是否等于左端的被积函数）",
+                items:[
+                    {q:"(1) $\\int \\dfrac{1}{\\sqrt{x}}\\,dx = 2\\sqrt{x}+C$", s:"成立。$\\left(2\\sqrt{x}\\right)'=2\\cdot\\dfrac{1}{2\\sqrt{x}}=\\dfrac{1}{\\sqrt{x}}$，导数等于被积函数。"},
+                    {q:"(2) $\\int 4^{x}\\,dx = 4^{x}+C$", s:"不成立。$\\left(4^{x}\\right)'=4^{x}\\ln 4\\neq 4^{x}$。正确结果应为 $\\int 4^{x}dx=\\dfrac{4^{x}}{\\ln 4}+C$。这是指数函数公式的易错点：$\\int a^x dx=\\dfrac{a^x}{\\ln a}+C$。"},
+                    {q:"(3) $\\int \\cos^{2}x\\,dx = \\dfrac{x}{2}+\\dfrac{1}{4}\\sin 2x+C$", s:"成立。$\\left(\\dfrac{x}{2}+\\dfrac{1}{4}\\sin 2x\\right)'=\\dfrac{1}{2}+\\dfrac{1}{2}\\cos 2x=\\dfrac{1+\\cos 2x}{2}=\\cos^{2}x$，导数等于被积函数。"},
+                    {q:"(4) $\\int \\dfrac{x}{\\sqrt{a^{2}+x^{2}}}\\,dx = \\sqrt{a^{2}+x^{2}}+C$", s:"成立。$\\left(\\sqrt{a^{2}+x^{2}}\\right)'=\\dfrac{1}{2\\sqrt{a^{2}+x^{2}}}\\cdot 2x=\\dfrac{x}{\\sqrt{a^{2}+x^{2}}}$，导数等于被积函数。"}
+                ]
+            },
+            {
+                title:"二、填空题",
+                items:[
+                    {q:"(1) $\\left[\\,\\int \\dfrac{1}{x^{3}}\\,dx\\,\\right]' =$（　）", s:"$\\dfrac{1}{x^{3}}$。先积分后求导，还原为被积函数本身（不带 $C$）。"},
+                    {q:"(2) $d\\left(\\,\\int \\sec x\\,dx\\,\\right) =$（　）", s:"$\\sec x\\,dx$。先积分后微分，还原为被积表达式 $\\sec x\\,dx$。"},
+                    {q:"(3) $\\int (\\tan^{2}x)'\\,dx =$（　）", s:"$\\tan^{2}x+C$。先求导得 $\\tan^{2}x$，再积分还原，先求导后积分要加 $C$。"},
+                    {q:"(4) $\\int d\\left(3^{\\cos x}\\right) =$（　）", s:"$3^{\\cos x}+C$。对微分积分即还原原函数，先微分后积分要加 $C$。"}
+                ]
+            },
+            {
+                title:"三、求下列函数的不定积分（直接积分法）",
+                items:[
+                    {q:"(1) $\\int x^{2}\\sqrt{x}\\,dx$", s:"$\\int x^{2}\\sqrt{x}\\,dx=\\int x^{5/2}dx=\\dfrac{x^{7/2}}{7/2}+C=\\dfrac{2}{7}x^{\\frac{7}{2}}+C$。"},
+                    {q:"(2) $\\int (x^{3}+2^{x}+1)\\,dx$", s:"$\\int (x^{3}+2^{x}+1)dx=\\dfrac{x^{4}}{4}+\\dfrac{2^{x}}{\\ln 2}+x+C$。"},
+                    {q:"(3) $\\int \\left(3x^{2}-\\sin x-\\dfrac{3}{x}\\right)dx$", s:"$\\int\\left(3x^{2}-\\sin x-\\dfrac{3}{x}\\right)dx=x^{3}+\\cos x-3\\ln|x|+C$。"},
+                    {q:"(4) $\\int (x-1)^{2}\\,dx$", s:"$\\int(x-1)^{2}dx=\\int(x^{2}-2x+1)dx=\\dfrac{x^{3}}{3}-x^{2}+x+C$。"},
+                    {q:"(5) $\\int \\dfrac{dh}{\\sqrt{2gh}}$（$g$ 为常数）", s:"$\\int\\dfrac{dh}{\\sqrt{2g}}\\cdot h^{-1/2}=\\dfrac{1}{\\sqrt{2g}}\\cdot 2h^{1/2}+C=\\dfrac{2\\sqrt{h}}{\\sqrt{2g}}+C=\\sqrt{\\dfrac{2h}{g}}+C$。"},
+                    {q:"(6) $\\int \\dfrac{x^{2}+\\sqrt{x^{3}}+3}{\\sqrt{x}}\\,dx$", s:"$\\int\\left(x^{3/2}+x+3x^{-1/2}\\right)dx=\\dfrac{2}{5}x^{\\frac{5}{2}}+\\dfrac{x^{2}}{2}+6\\sqrt{x}+C$。"},
+                    {q:"(7) $\\int \\dfrac{6x^{3}-2x^{2}+3x+5}{x^{3}}\\,dx$", s:"拆项：$\\int\\left(6-\\dfrac{2}{x}+\\dfrac{3}{x^{2}}+\\dfrac{5}{x^{3}}\\right)dx=6x-2\\ln|x|-\\dfrac{3}{x}-\\dfrac{5}{2x^{2}}+C$。"},
+                    {q:"(8) $\\int \\left(\\dfrac{1}{x}+2e^{x}+\\dfrac{1}{\\cos^{2}x}\\right)dx$", s:"$\\ln|x|+2e^{x}+\\tan x+C$。"},
+                    {q:"(9) $\\int \\dfrac{2\\cdot 3^{x}+2^{x}}{3^{x}}\\,dx$", s:"$\\int\\left[2+\\left(\\dfrac{2}{3}\\right)^{x}\\right]dx=2x+\\dfrac{\\left(\\dfrac{2}{3}\\right)^{x}}{\\ln\\frac{2}{3}}+C$。"},
+                    {q:"(10) $\\int \\sqrt{x}(x-2)\\,dx$", s:"$\\int\\left(x^{3/2}-2x^{1/2}\\right)dx=\\dfrac{2}{5}x^{\\frac{5}{2}}-\\dfrac{4}{3}x^{\\frac{3}{2}}+C$。"},
+                    {q:"(11) $\\int \\dfrac{e^{2x}-1}{e^{x}+1}\\,dx$", s:"因式分解：$e^{2x}-1=(e^{x}-1)(e^{x}+1)$，原式 $=\\int(e^{x}-1)dx=e^{x}-x+C$。"},
+                    {q:"(12) $\\int (10^{x}+\\cot^{2}x)\\,dx$", s:"$\\cot^{2}x=\\csc^{2}x-1$，原式 $=\\dfrac{10^{x}}{\\ln 10}+\\int\\csc^{2}x\\,dx-\\int dx=\\dfrac{10^{x}}{\\ln 10}-\\cot x-x+C$。"},
+                    {q:"(13) $\\int \\cos^{2}\\dfrac{x}{2}\\,dx$", s:"降幂：$\\cos^{2}\\dfrac{x}{2}=\\dfrac{1+\\cos x}{2}$，原式 $=\\dfrac{1}{2}\\left(x+\\sin x\\right)+C=\\dfrac{x}{2}+\\dfrac{\\sin x}{2}+C$。"},
+                    {q:"(14) $\\int \\dfrac{\\cos 2x}{\\cos^{2}x\\,\\sin^{2}x}\\,dx$", s:"$\\cos 2x=\\cos^{2}x-\\sin^{2}x$，原式 $=\\int\\left(\\dfrac{1}{\\sin^{2}x}-\\dfrac{1}{\\cos^{2}x}\\right)dx=\\int(\\csc^{2}x-\\sec^{2}x)dx=-\\cot x-\\tan x+C$。"},
+                    {q:"(15) $\\int \\dfrac{3}{1+\\cos 2x}\\,dx$", s:"$1+\\cos 2x=2\\cos^{2}x$，原式 $=\\dfrac{3}{2}\\int\\sec^{2}x\\,dx=\\dfrac{3}{2}\\tan x+C$。"},
+                    {q:"(16) $\\int \\sec x(\\sec x-\\tan x)\\,dx$", s:"$\\int\\left(\\sec^{2}x-\\sec x\\tan x\\right)dx=\\tan x-\\sec x+C$。"},
+                    {q:"(17) $\\int \\dfrac{1+x^{2}-x^{4}}{x^{2}(1+x^{2})}\\,dx$", s:"拆项：$\\dfrac{1+x^{2}-x^{4}}{x^{2}(1+x^{2})}=\\dfrac{1}{x^{2}}-\\dfrac{x^{2}}{1+x^{2}}=\\dfrac{1}{x^{2}}-1+\\dfrac{1}{1+x^{2}}$，原式 $=-\\dfrac{1}{x}-x+\\arctan x+C$。"},
+                    {q:"(18) $\\int \\left(\\dfrac{6}{1+x^{2}}+\\dfrac{5}{\\sqrt{1-x^{2}}}\\right)dx$", s:"$6\\arctan x+5\\arcsin x+C$。"}
+                ]
+            },
+            {
+                title:"四、设物体以速度 v = 2cos t 做直线运动，开始时质点的位移为 s₀，求质点的运动方程",
+                items:[
+                    {q:"题：设物体以速度 $v=2\\cos t$ 做直线运动，开始时（$t=0$）质点的位移为 $s_{0}$，求质点的运动方程。", s:"由 $s'(t)=v(t)$ 得 $s(t)=\\int 2\\cos t\\,dt=2\\sin t+C$；由 $t=0$ 时 $s=s_{0}$，得 $C=s_{0}$。故运动方程为 $s=2\\sin t+s_{0}$。"},
+                ]
+            },
+            {
+                title:"五、已知曲线通过点 (1, 2)，且任一点处切线斜率为 2x − 3，求曲线方程",
+                items:[
+                    {q:"题：已知某曲线通过点 $(1,2)$，且在曲线上任一点处切线斜率为 $2x-3$，求该曲线的方程。", s:"设曲线方程为 $y=f(x)$，则 $y'=2x-3$，$y=\\int(2x-3)dx=x^{2}-3x+C$；由曲线过点 $(1,2)$：$2=1-3+C$，得 $C=4$。故曲线方程为 $y=x^{2}-3x+4$。"}
+                ]
+            }
+        ];
+
+        function renderMath(root) {
+            if (window.renderMathInElement) {
+                renderMathInElement(root, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+        function renderHomework(){
+            const box = document.getElementById('hwBox');
+            box.innerHTML = HOMEWORK.map((g, gi)=>{
+                return `<div class="hw-group">
+                    <div class="hw-group-title">${g.title}</div>
+                    ${g.items.map((it, ii)=>`
+                        <div class="hw-item" data-g="${gi}" data-i="${ii}">
+                            <div class="hw-q"><span class="hw-badge">第 ${gi+1} 大题</span>${it.q}</div>
+                            <button class="hw-toggle">显示解答</button>
+                            <div class="hw-solution">${it.s}</div>
+                        </div>`).join('')}
+                </div>`;
+            }).join('');
+            box.querySelectorAll('.hw-toggle').forEach(btn=>{
+                btn.addEventListener('click', ()=>{
+                    const item = btn.closest('.hw-item');
+                    const open = item.classList.toggle('open');
+                    btn.textContent = open ? '收起解答' : '显示解答';
+                });
+            });
+            renderMath(box);
+        }
+        document.getElementById('hwExpandAll').addEventListener('click', ()=>{
+            document.querySelectorAll('.hw-item').forEach(it=>{ it.classList.add('open'); it.querySelector('.hw-toggle').textContent='收起解答'; });
+        });
+        document.getElementById('hwCollapseAll').addEventListener('click', ()=>{
+            document.querySelectorAll('.hw-item').forEach(it=>{ it.classList.remove('open'); it.querySelector('.hw-toggle').textContent='显示解答'; });
+        });
+        renderHomework();
+
+        /* ================= 同步练习 ================= */
         function shuffle(arr) {
             const a = arr.slice();
             for (let i = a.length - 1; i > 0; i--) {
@@ -644,157 +846,159 @@
         const problemGenerator = {
             easy: [
                 ()=>({
-                    tag:"换元思想",
-                    question:"设 $\\int f(x)dx=F(x)+C$，则 $\\int f(2x)dx=$（　）",
-                    choices:["$\\dfrac{1}{2}F(2x)+C$","$F(2x)+C$","$2F(2x)+C$","$F\\left(\\dfrac{x}{2}\\right)+C$"],
-                    answer:"$\\dfrac{1}{2}F(2x)+C$",
-                    solution:"令 $u=2x$，则 $dx=\\dfrac{1}{2}du$，$\\int f(2x)dx=\\dfrac{1}{2}\\int f(u)du=\\dfrac{1}{2}F(2x)+C$。这正是凑微分的核心：系数要与内函数导数配套。"
+                    tag:"原函数概念",
+                    question:"下列函数中，是 $f(x)=3x^{2}$ 的原函数的是（　）",
+                    choices:["$x^{3}+1$","$\\dfrac{x^{3}}{3}$","$3x^{3}$","$\\dfrac{x^{2}}{3}$"],
+                    answer:"$x^{3}+1$",
+                    solution:"原函数要求求导后等于 $3x^{2}$：$(x^{3}+1)'=3x^{2}$ ✓；$\\left(\\dfrac{x^{3}}{3}\\right)'=x^{2}$ ✗；$(3x^{3})'=9x^{2}$ ✗；$\\left(\\dfrac{x^{2}}{3}\\right)'=\\dfrac{2x}{3}$ ✗。"
                 }),
                 ()=>({
                     tag:"基本公式",
-                    question:"$\\int \\sec^2 x\\,dx=$（　）",
+                    question:"$\\int \\sec^{2}x\\,dx=$（　）",
                     choices:["$\\tan x+C$","$\\cot x+C$","$\\sec x+C$","$\\sec x\\tan x+C$"],
                     answer:"$\\tan x+C$",
-                    solution:"基本积分公式：$(\\tan x)'=\\sec^2 x$，故 $\\int\\sec^2 x\\,dx=\\tan x+C$。"
+                    solution:"基本积分公式：$(\\tan x)'=\\sec^{2}x$，故 $\\int\\sec^{2}x\\,dx=\\tan x+C$。"
                 }),
                 ()=>({
                     tag:"基本公式·易错",
                     question:"$\\int \\dfrac{1}{x}dx=$（　）",
-                    choices:["$\\ln|x|+C$","$\\ln x+C$","$\\dfrac{1}{x^2}+C$","$-\\dfrac{1}{x^2}+C$"],
+                    choices:["$\\ln|x|+C$","$\\ln x+C$","$\\dfrac{1}{x^{2}}+C$","$-\\dfrac{1}{x^{2}}+C$"],
                     answer:"$\\ln|x|+C$",
                     solution:"$x$ 可正可负，必须写 $\\ln|x|+C$。丢绝对值是高频错误：当 $x<0$ 时 $\\ln x$ 无意义。"
                 }),
                 ()=>({
-                    tag:"凑微分系数",
-                    question:"$\\int \\cos 2x\\,dx=$（　）",
-                    choices:["$\\dfrac{1}{2}\\sin 2x+C$","$\\sin 2x+C$","$2\\sin 2x+C$","$-\\dfrac{1}{2}\\sin 2x+C$"],
-                    answer:"$\\dfrac{1}{2}\\sin 2x+C$",
-                    solution:"$\\int\\cos 2x\\,dx=\\dfrac{1}{2}\\int\\cos 2x\\,d(2x)=\\dfrac{1}{2}\\sin 2x+C$。求导验证：$\\left(\\dfrac{1}{2}\\sin 2x\\right)'=\\cos 2x$ ✓"
+                    tag:"积分与微分互逆",
+                    question:"$\\left[\\,\\int f(x)dx\\,\\right]'=$（　）",
+                    choices:["$f(x)$","$f(x)+C$","$F(x)$","$f'(x)$"],
+                    answer:"$f(x)$",
+                    solution:"先积分后求导，还原为被积函数本身，不带 $C$。而 $\\int F'(x)dx=F(x)+C$（先求导后积分要加 $C$）。"
                 }),
                 ()=>({
-                    tag:"凑微分形式",
-                    question:"下列凑微分正确的是（　）",
-                    choices:["$x\\,dx=\\dfrac{1}{2}d(x^2)$","$x\\,dx=d(x^2)$","$dx=d(x^2)$","$x\\,dx=2d(x^2)$"],
-                    answer:"$x\\,dx=\\dfrac{1}{2}d(x^2)$",
-                    solution:"因为 $d(x^2)=2x\\,dx$，所以 $x\\,dx=\\dfrac{1}{2}d(x^2)$。凑微分前先问：$d(x^2)$ 展开是什么？"
+                    tag:"幂函数公式",
+                    question:"$\\int x^{\\frac{5}{2}}dx=$（　）",
+                    choices:["$\\dfrac{2}{7}x^{\\frac{7}{2}}+C$","$\\dfrac{5}{2}x^{\\frac{7}{2}}+C$","$\\dfrac{2}{5}x^{\\frac{5}{2}}+C$","$\\dfrac{7}{2}x^{\\frac{7}{2}}+C$"],
+                    answer:"$\\dfrac{2}{7}x^{\\frac{7}{2}}+C$",
+                    solution:"$\\int x^{\\mu}dx=\\dfrac{x^{\\mu+1}}{\\mu+1}+C$，此处 $\\mu=\\dfrac{5}{2}$，故 $=\\dfrac{x^{7/2}}{7/2}+C=\\dfrac{2}{7}x^{7/2}+C$。"
                 }),
                 ()=>({
-                    tag:"指数函数",
-                    question:"$\\int e^{3x}dx=$（　）",
-                    choices:["$\\dfrac{1}{3}e^{3x}+C$","$e^{3x}+C$","$3e^{3x}+C$","$\\dfrac{1}{3}e^{3x}$"],
-                    answer:"$\\dfrac{1}{3}e^{3x}+C$",
-                    solution:"$\\int e^{3x}dx=\\dfrac{1}{3}\\int e^{3x}\\,d(3x)=\\dfrac{1}{3}e^{3x}+C$。注意 D 选项丢了常数 $C$，不定积分结果必须含 $C$。"
+                    tag:"基本公式",
+                    question:"$\\int \\dfrac{dx}{1+x^{2}}=$（　）",
+                    choices:["$\\arctan x+C$","$\\arcsin x+C$","$\\ln(1+x^{2})+C$","$\\dfrac{1}{1+x^{2}}+C$"],
+                    answer:"$\\arctan x+C$",
+                    solution:"基本积分公式：$(\\arctan x)'=\\dfrac{1}{1+x^{2}}$。注意与 $\\int\\dfrac{dx}{\\sqrt{1-x^{2}}}=\\arcsin x+C$ 区分。"
                 }),
                 ()=>({
-                    tag:"原函数概念",
-                    question:"下列函数中，是 $f(x)=2x$ 的原函数的是（　）",
-                    choices:["$x^2+1$","$x^3$","$2x^2$","$\\dfrac{x^2}{2}$"],
-                    answer:"$x^2+1$",
-                    solution:"原函数要求求导后等于 $2x$：$(x^2+1)'=2x$ ✓；$(x^3)'=3x^2$ ✗；$(2x^2)'=4x$ ✗；$\\left(\\dfrac{x^2}{2}\\right)'=x$ ✗。"
+                    tag:"线性性质",
+                    question:"下列等式正确的是（　）",
+                    choices:["$\\int[f(x)+g(x)]dx=\\int f(x)dx+\\int g(x)dx$","$\\int f(x)g(x)dx=\\int f(x)dx\\cdot\\int g(x)dx$","$\\int kf(x)dx=k\\int f(x)dx$（$k$ 为任意常数）","$\\int f(x)dx=\\int f(x)dx+\\int g(x)dx$"],
+                    answer:"$\\int[f(x)+g(x)]dx=\\int f(x)dx+\\int g(x)dx$",
+                    solution:"不定积分具有线性性质：和差可拆、非零常数可提出。B 错：积分没有乘积公式；C 错：$k\\neq0$ 才可以（$k=0$ 时左端 $=C$，右端 $=0$，不成立）。"
                 })
             ],
             medium:[
                 ()=>{
                     return {
                         tag:"原函数求值",
-                        question:`【<strong>原函数</strong>】设 $F'(x)=2x$ 且 $F(1)=3$，求 $F(3)$ 的值。`,
-                        answer:11,
-                        solution:`$F(x)=\\int 2x\\,dx=x^2+C$；由 $F(1)=1+C=3$ 得 $C=2$；故 $F(x)=x^2+2$，$F(3)=9+2=11$。`
+                        question:`【<strong>原函数</strong>】设 $F'(x)=4x^{3}$ 且 $F(1)=2$，求 $F(2)$ 的值。`,
+                        answer:17,
+                        solution:`$F(x)=\\int 4x^{3}dx=x^{4}+C$；由 $F(1)=1+C=2$ 得 $C=1$；故 $F(x)=x^{4}+1$，$F(2)=16+1=17$。`
                     }
                 },
                 ()=>{
                     return {
-                        tag:"曲线应用",
-                        question:`【<strong>曲线方程</strong>】一曲线经过点 $(1,3)$，且曲线上任意点处的切线斜率为 $3x^2$，求该曲线在 $x=2$ 处的纵坐标 $y$。`,
-                        answer:10,
-                        solution:`$y=\\int 3x^2\\,dx=x^3+C$；过点 $(1,3)$：$3=1+C$，得 $C=2$；所以 $y=x^3+2$，$y(2)=8+2=10$。`
-                    }
-                },
-                ()=>{
-                    return {
-                        tag:"由积分式求导",
-                        question:`【<strong>不定积分定义</strong>】已知 $\\int f(x)dx=\\dfrac{x^3}{3}+C$，求 $f(2)$ 的值。`,
+                        tag:"曲线应用（教材第5题同款）",
+                        question:`【<strong>曲线方程</strong>】曲线过点 $(1,2)$，任一点处切线斜率为 $2x-3$，求曲线在 $x=3$ 处的纵坐标 $y$。`,
                         answer:4,
-                        solution:`不定积分与求导互逆：$f(x)=\\left(\\dfrac{x^3}{3}\\right)'=x^2$，所以 $f(2)=4$。`
+                        solution:`$y=\\int(2x-3)dx=x^{2}-3x+C$；过 $(1,2)$：$2=1-3+C$，得 $C=4$；曲线为 $y=x^{2}-3x+4$，$y(3)=9-9+4=4$。`
                     }
                 },
                 ()=>{
                     return {
-                        tag:"运动学应用",
-                        question:`【<strong>变速运动</strong>】一列车在直线轨道上做变速运动，速度 $v(t)=2t+3$（m/s），求从 $t=0$ 到 $t=3$（s）走过的位移 $s$（米）。`,
-                        answer:18,
-                        solution:`由 $s'(t)=v(t)$ 得 $s(t)=\\int(2t+3)dt=t^2+3t+C$；位移 $=s(3)-s(0)=(9+9)-0=18$ 米。`
+                        tag:"运动学应用（教材第4题同款）",
+                        question:`【<strong>运动方程</strong>】物体以速度 $v=2\\cos t$ 做直线运动，开始时位移 $s_{0}=1$，求 $t=\\dfrac{\\pi}{2}$ 时的位移 $s$。`,
+                        answer:3,
+                        solution:`$s(t)=\\int 2\\cos t\\,dt=2\\sin t+C$；$s(0)=C=1$；$s\\left(\\dfrac{\\pi}{2}\\right)=2\\sin\\dfrac{\\pi}{2}+1=2+1=3$。`
                     }
                 },
                 ()=>{
                     return {
-                        tag:"指数原函数",
-                        question:`【<strong>原函数</strong>】设 $F'(x)=e^x$ 且 $F(0)=1$，求 $F(\\ln 2)$ 的值。`,
-                        answer:2,
-                        solution:`$F(x)=\\int e^x dx=e^x+C$；由 $F(0)=e^0+C=1$ 得 $C=0$；故 $F(\\ln 2)=e^{\\ln 2}=2$。`
+                        tag:"积分与微分互逆",
+                        question:`【<strong>互逆关系</strong>】设 $\\left[\\,\\int \\sec x\\,dx\\,\\right]'$ 在 $x=0$ 处的值为 $A$，求 $A$。`,
+                        answer:1,
+                        solution:`先积分后求导还原为被积函数：$\\left[\\,\\int \\sec x\\,dx\\,\\right]'=\\sec x$；$\\sec 0=\\dfrac{1}{\\cos 0}=1$，故 $A=1$。`
                     }
                 },
                 ()=>{
                     return {
-                        tag:"组合求导",
-                        question:`【<strong>不定积分定义</strong>】已知 $\\int f(x)dx=x^3+x^2+C$，求 $f(1)$ 的值。`,
+                        tag:"原函数求值",
+                        question:`【<strong>原函数</strong>】设 $f(x)=2x+3$，$F(x)$ 是 $f(x)$ 的原函数且 $F(0)=1$，求 $F(1)$ 的值。`,
                         answer:5,
-                        solution:`$f(x)=(x^3+x^2)'=3x^2+2x$，所以 $f(1)=3+2=5$。`
+                        solution:`$F(x)=\\int(2x+3)dx=x^{2}+3x+C$；由 $F(0)=C=1$；$F(1)=1+3+1=5$。`
+                    }
+                },
+                ()=>{
+                    return {
+                        tag:"组合积分",
+                        question:`【<strong>原函数</strong>】设 $F(x)=\\int(2e^{x}+3)dx$ 且 $F(0)=0$，求 $F(1)$ 的值。（保留两位小数）`,
+                        answer:6.44,
+                        tol:0.03,
+                        solution:`$F(x)=2e^{x}+3x+C$；由 $F(0)=2+C=0$ 得 $C=-2$；$F(1)=2e+3-2=2e+1\\approx 6.44$。`
                     }
                 }
             ],
             hard:[
                 ()=>{
                     return {
-                        tag:"轨道交通·制动",
-                        question:`【<strong>列车制动</strong>】列车以 $72$ km/h（即 $20$ m/s）进站，开始匀减速制动，加速度为 $-2$ m/s²。求从开始制动到列车停止走过的距离 $s$（米）。`,
-                        answer:100,
-                        solution:`$v(t)=20-2t$，令 $v=0$ 得 $t=10$ s；$s(t)=\\int(20-2t)dt=20t-t^2$；$s(10)=200-100=100$ 米。先积分求速度、再积分求位移——这是定积分应用的伏笔。`
+                        tag:"直接积分法（教材第3(10)题同款）",
+                        question:`【<strong>直接积分法</strong>】设 $F(x)=\\int \\sqrt{x}\\,(x-2)\\,dx$ 且 $F(0)=1$，求 $F(4)$ 的值。（保留两位小数）`,
+                        answer:3.13,
+                        tol:0.03,
+                        solution:`$F(x)=\\int\\left(x^{3/2}-2x^{1/2}\\right)dx=\\dfrac{2}{5}x^{5/2}-\\dfrac{4}{3}x^{3/2}+C$；$F(0)=C=1$；$F(4)=\\dfrac{2}{5}\\cdot 32-\\dfrac{4}{3}\\cdot 8+1=12.8-10.67+1\\approx 3.13$。`
                     }
                 },
                 ()=>{
                     return {
-                        tag:"换元综合",
-                        question:`【<strong>凑微分</strong>】设 $F'(x)=2xe^{x^2}$ 且 $F(0)=1$，求 $F(1)$ 的值。（保留两位小数）`,
-                        answer:2.72,
+                        tag:"直接积分法（教材第3(11)题同款）",
+                        question:`【<strong>直接积分法</strong>】设 $F(x)=\\displaystyle\\int\\dfrac{e^{2x}-1}{e^{x}+1}dx$ 且 $F(0)=0$，求 $F(1)$ 的值。（保留两位小数）`,
+                        answer:0.72,
                         tol:0.03,
-                        solution:`$\\int 2xe^{x^2}dx=\\int e^{x^2}\\,d(x^2)=e^{x^2}+C$（凑微分 $2x\\,dx=d(x^2)$）；由 $F(0)=e^0+C=1$ 得 $C=0$；$F(1)=e\\approx 2.72$。`
+                        solution:`因式分解 $e^{2x}-1=(e^{x}-1)(e^{x}+1)$，$F(x)=\\int(e^{x}-1)dx=e^{x}-x+C$；$F(0)=1+C=0$ 得 $C=-1$；$F(1)=e-1-1=e-2\\approx 0.72$。`
                     }
                 },
                 ()=>{
                     return {
-                        tag:"负指数",
-                        question:`【<strong>原函数</strong>】设 $F'(x)=e^{-x}$ 且 $F(0)=3$，求 $F(1)$ 的值。（保留两位小数）`,
-                        answer:3.63,
+                        tag:"三角恒等变形（教材第3(14)题同款）",
+                        question:`【<strong>直接积分法</strong>】设 $F(x)=\\displaystyle\\int\\dfrac{\\cos 2x}{\\cos^{2}x\\sin^{2}x}dx$ 且 $F\\left(\\dfrac{\\pi}{4}\\right)=0$，求 $F\\left(\\dfrac{\\pi}{3}\\right)$ 的值。（保留两位小数）`,
+                        answer:-0.31,
                         tol:0.03,
-                        solution:`$F(x)=\\int e^{-x}dx=-e^{-x}+C$（注意负号！求导验证：$(-e^{-x})'=e^{-x}$ ✓）；由 $F(0)=-1+C=3$ 得 $C=4$；$F(1)=4-e^{-1}\\approx 4-0.37=3.63$。`
+                        solution:`$\\cos 2x=\\cos^{2}x-\\sin^{2}x$，$F(x)=\\int(\\csc^{2}x-\\sec^{2}x)dx=-\\cot x-\\tan x+C$；$F\\left(\\dfrac{\\pi}{4}\\right)=-1-1+C=0$ 得 $C=2$；$F\\left(\\dfrac{\\pi}{3}\\right)=-\\dfrac{\\sqrt{3}}{3}-\\sqrt{3}+2=2-\\dfrac{4\\sqrt{3}}{3}\\approx -0.31$。`
                     }
                 },
                 ()=>{
                     return {
-                        tag:"复合凑微分",
-                        question:`【<strong>凑微分</strong>】设 $F'(x)=x\\cos(x^2)$ 且 $F(0)=0.5$，求 $F(\\sqrt{\\pi})$ 的值。`,
-                        answer:0.5,
+                        tag:"三角恒等变形（教材第3(15)题同款）",
+                        question:`【<strong>直接积分法</strong>】设 $F(x)=\\displaystyle\\int\\dfrac{3}{1+\\cos 2x}dx$ 且 $F(0)=1$，求 $F\\left(\\dfrac{\\pi}{6}\\right)$ 的值。（保留两位小数）`,
+                        answer:1.87,
                         tol:0.03,
-                        solution:`$\\int x\\cos(x^2)dx=\\dfrac{1}{2}\\int\\cos(x^2)\\,d(x^2)=\\dfrac{1}{2}\\sin(x^2)+C$；由 $F(0)=0+C=0.5$ 得 $C=0.5$；$F(\\sqrt{\\pi})=\\dfrac{1}{2}\\sin\\pi+0.5=0.5$。`
+                        solution:`$1+\\cos 2x=2\\cos^{2}x$，$F(x)=\\dfrac{3}{2}\\int\\sec^{2}x\\,dx=\\dfrac{3}{2}\\tan x+C$；$F(0)=C=1$；$F\\left(\\dfrac{\\pi}{6}\\right)=\\dfrac{3}{2}\\cdot\\dfrac{\\sqrt{3}}{3}+1=\\dfrac{\\sqrt{3}}{2}+1\\approx 1.87$。`
                     }
                 },
                 ()=>{
                     return {
-                        tag:"对数求导",
-                        question:`【<strong>不定积分定义</strong>】已知 $\\int f(x)dx=x\\ln x+C$（$x>0$），求 $f(e)$ 的值。（保留两位小数）`,
-                        answer:2,
+                        tag:"指数化简（教材第3(9)题同款）",
+                        question:`【<strong>直接积分法</strong>】设 $F(x)=\\displaystyle\\int\\dfrac{2\\cdot 3^{x}+2^{x}}{3^{x}}dx$ 且 $F(0)=0$，求 $F(1)$ 的值。（保留两位小数）`,
+                        answer:2.82,
                         tol:0.03,
-                        solution:`$f(x)=(x\\ln x)'=\\ln x+1$（乘积求导），所以 $f(e)=\\ln e+1=1+1=2$。`
+                        solution:`$F(x)=\\int\\left[2+\\left(\\dfrac{2}{3}\\right)^{x}\\right]dx=2x+\\dfrac{\\left(\\frac{2}{3}\\right)^{x}}{\\ln\\frac{2}{3}}+C$；$\\ln\\frac{2}{3}\\approx -0.4055$，$F(0)=\\dfrac{1}{-0.4055}+C=0$ 得 $C\\approx 2.4661$；$F(1)=2+\\dfrac{0.6667}{-0.4055}+2.4661\\approx 2.82$。`
                     }
                 },
                 ()=>{
                     return {
-                        tag:"配方与凑微分",
-                        question:`【<strong>综合</strong>】已知 $\\displaystyle\\int\\dfrac{dx}{x^2+4x+5}=\\arctan(x+2)+C$，设 $F(x)$ 为其一个原函数，求 $F(0)-F(-2)$ 的值。（保留两位小数）`,
-                        answer:1.11,
-                        tol:0.03,
-                        solution:`$x^2+4x+5=(x+2)^2+1$，凑微分 $d(x+2)=dx$；$F(0)=\\arctan 2\\approx 1.1071$，$F(-2)=\\arctan 0=0$；$F(0)-F(-2)\\approx 1.11$。`
+                        tag:"综合拆项（教材第3(3)题同款）",
+                        question:`【<strong>直接积分法</strong>】设 $F(x)=\\displaystyle\\int\\left(3x^{2}-\\sin x-\\dfrac{3}{x}\\right)dx$（$x>0$）且 $F(1)=1$，求 $F(\\pi)$ 的值。（保留两位小数）`,
+                        answer:26.03,
+                        tol:0.05,
+                        solution:`$F(x)=x^{3}+\\cos x-3\\ln x+C$；$F(1)=1+\\cos 1-0+C=1$ 得 $C=-\\cos 1\\approx -0.5403$；$F(\\pi)=\\pi^{3}+\\cos\\pi-3\\ln\\pi-0.5403\\approx 31.006-1-3.434-0.540\\approx 26.03$。`
                     }
                 }
             ]
@@ -891,17 +1095,6 @@
             setTimeout(()=>{createFirework(cx,cy);runFireworkLoop();},0);
             setTimeout(()=>{createFirework(cx*0.4,cy*0.6);},800);
             setTimeout(()=>{createFirework(cx*1.6,cy*0.55);},1600);
-        }
-        function renderMath(root) {
-            if (window.renderMathInElement) {
-                renderMathInElement(root, {
-                    delimiters: [
-                        {left: '$$', right: '$$', display: true},
-                        {left: '$', right: '$', display: false}
-                    ],
-                    throwOnError: false
-                });
-            }
         }
         function initChart(){
             const ctx = document.getElementById('accChart').getContext('2d');
