@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>不定积分与换元积分法・专项训练</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #64b5f6 0%, #42a5f5 50%, #2196f3 100%);
+            color: #222;
+            min-height: 100vh;
+            padding: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .container {
+            max-width: 1180px;
+            width: 100%;
+            background-color: #eceef2;
+            backdrop-filter: blur(14px);
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0, 60, 120, 0.25);
+            padding: 32px 36px;
+            position: relative;
+        }
+        header {
+            position: relative;
+            margin-bottom: 24px;
+            padding:18px 20px;
+            border-radius:12px;
+            background-color:#ffffff;
+        }
+        .header-brand{
+            text-align:left;
+            color:#2c5278;
+            font-size:1.1rem;
+            font-weight:normal;
+            margin-bottom:12px;
+        }
+        .header-title-wrap {
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #01579b;
+            margin-bottom: 8px;
+            font-size: 2.4rem;
+            letter-spacing: 1px;
+        }
+        .title-icon{
+            filter: grayscale(100%) brightness(1.15) sepia(1) hue-rotate(195deg) saturate(2.2);
+        }
+        .subtitle {
+            color: #2c5278;
+            font-size: 1.15rem;
+        }
+        .content {
+            display: flex;
+            gap: 28px;
+        }
+        .problem-section {
+            flex: 1.6;
+            min-width: 0;
+        }
+        .card {
+            background: #f7f8fa;
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 22px 24px;
+            box-shadow: 0 4px 14px rgba(10, 60, 120, 0.12);
+            margin-bottom: 18px;
+            border: 1px solid rgba(220, 228, 240, 0.55);
+            position:relative;
+        }
+        #fireworkCanvas{
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:260px;
+            pointer-events:none;
+            z-index:100;
+            display:none;
+        }
+        .controls-section {
+            flex: 1;
+            min-width: 320px;
+        }
+        h2 {
+            color: #01579b;
+            margin-bottom: 14px;
+            font-size: 1.45rem;
+            border-left: 5px solid #0288d1;
+            padding:8px 12px;
+            border-radius:8px;
+            background: #ffffff;
+            box-shadow: 0 0 6px rgba(2,136,209,0.12);
+        }
+        .problem {
+            font-size: 1.35rem;
+            line-height: 1.8;
+            padding: 18px 20px;
+            background-color: rgba(244, 247, 255, 0.65);
+            border-radius: 10px;
+            border-left: 5px solid #0288d1;
+            min-height: 110px;
+            transition: opacity 0.4s ease;
+            color:#222;
+        }
+        .choices {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 20px 0 8px 0;
+        }
+        .choice-btn {
+            padding: 16px 18px;
+            font-size: 1.2rem;
+            background-color: #ffffff;
+            border: 2px solid #d0dceb;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.22s ease;
+            text-align: left;
+            line-height: 1.5;
+            font-weight:normal;
+            box-shadow: 0 4px 6px rgba(0,40,80,0.14), 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .choice-btn:hover:not(:disabled) {
+            border-color: #0288d1;
+            background-color: #e8f4fc;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 14px rgba(0,40,80,0.18),0 0 0 3px rgba(2,136,209,0.22);
+        }
+        .choice-btn:active:not(:disabled){
+            transform: translateY(1px);
+            box-shadow:0 2px 4px rgba(0,40,80,0.12);
+        }
+        .choice-btn:disabled {
+            cursor: default;
+            opacity: 0.95;
+        }
+        .choice-btn.correct-choice {
+            background-color: #e6f7e9;
+            border-color: #2e9e52;
+            color: #1b6b37;
+            transform: scale(1.02);
+            box-shadow: 0 6px 12px rgba(46,158,82,0.25);
+        }
+        .choice-btn.incorrect-choice {
+            background-color: #fdecec;
+            border-color: #d9534f;
+            color: #a02622;
+            transform: scale(1.02);
+            box-shadow:0 6px 12px rgba(217,83,79,0.22);
+        }
+        .answer-input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 1.25rem;
+            border: 2px solid #d0dceb;
+            border-radius: 10px;
+            margin: 18px 0 6px 0;
+            transition: all 0.22s ease;
+            box-shadow:0 3px 6px rgba(0,40,80,0.1);
+            background-color:#fff;
+        }
+        .answer-input.input-correct{
+            background-color:#e6f7e9;
+            border-color:#2e9e52;
+        }
+        .answer-input.input-wrong{
+            background-color:#fdecec;
+            border-color:#d9534f;
+        }
+        .answer-input:focus {
+            border-color: #0288d1;
+            outline: none;
+            box-shadow:0 0 0 3px rgba(2,136,209,0.22),0 4px 10px rgba(0,40,80,0.14);
+        }
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin: 16px 0 4px 0;
+            flex-wrap: wrap;
+        }
+        .buttons button {
+            flex: 1;
+            min-width:110px;
+            min-height:48px;
+            padding: 13px 8px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.98rem;
+            cursor: pointer;
+            transition: all 0.22s ease;
+            font-weight: 600;
+            box-shadow:0 4px 8px rgba(0,40,80,0.16), 0 2px 4px rgba(0,0,0,0.08);
+        }
+        .buttons button:hover:not(:disabled){
+            transform: translateY(-3px);
+        }
+        .buttons button:active:not(:disabled){
+            transform: translateY(1px);
+            box-shadow:0 2px 4px rgba(0,40,80,0.12);
+        }
+        .buttons button:disabled{
+            opacity:0.5;
+            cursor:not-allowed;
+            transform:none;
+        }
+        .submit-btn {
+            background-color: #2e9e52;
+            color: white;
+        }
+        .submit-btn:hover { background-color: #247a40; box-shadow:0 8px 14px rgba(46,158,82,0.3); }
+        .hint-btn {
+            background-color: #f0a020;
+            color: white;
+        }
+        .hint-btn:hover { background-color: #cc8513; box-shadow:0 8px 14px rgba(240,160,32,0.3); }
+        .prev-btn{
+            background-color:#546e7a;
+            color:#fff;
+        }
+        .prev-btn:hover{
+            background-color:#37474f;
+            box-shadow:0 8px 14px rgba(84,110,122,0.3);
+        }
+        .next-btn {
+            background-color: #0288d1;
+            color: white;
+        }
+        .next-btn:hover { background-color: #0277bd; box-shadow:0 8px 14px rgba(2,136,209,0.35); }
+        .template-btn{
+            background-color:#722ed1;
+            color:#fff;
+        }
+        .template-btn:hover{
+            background-color:#531dab; box-shadow:0 8px 14px rgba(114,46,209,0.32);
+        }
+        .reset-btn{
+            background-color:#d9534f;
+            color:#fff;
+        }
+        .reset-btn:hover{
+            background-color:#b52b27; box-shadow:0 8px 14px rgba(217,83,79,0.3);
+        }
+        .toggle-btn{
+            background-color:rgba(240, 243, 250,0.7);
+            color:#444;
+        }
+        .toggle-btn.active{
+            background-color: #0288d1;
+            color: white;
+            box-shadow:0 6px 12px rgba(2,136,209,0.35);
+        }
+        .toggle-btn:hover{
+            transform: translateY(-2px);
+            box-shadow:0 6px 10px rgba(0,40,80,0.16);
+        }
+        .wrong-buttons-wrap{
+            display:flex;
+            gap:10px;
+            margin-bottom:12px;
+        }
+        .wrong-buttons-wrap button{
+            flex:1;
+            padding:12px 8px;
+            text-align:center;
+            border-radius:10px;
+            font-size:1.05rem;
+            font-weight:600;
+        }
+        .result {
+            margin: 16px 0 4px 0;
+            padding: 16px 18px;
+            border-radius: 10px;
+            display: none;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        .correct {
+            background-color: #e6f7e9;
+            border-left: 5px solid #2e9e52;
+            color: #1b6b37;
+        }
+        .incorrect {
+            background-color: #fdecec;
+            border-left: 5px solid #d9534f;
+            color: #a02622;
+        }
+        .hint {
+            background-color: #fff5e0;
+            border-left: 5px solid #f0a020;
+            color: #9a6810;
+        }
+        .template-panel{
+            margin-top:12px;
+            padding:16px;
+            background:rgba(249, 244, 255, 0.72);
+            backdrop-filter: blur(6px);
+            border-left:5px solid #722ed1;
+            border-radius:10px;
+            display:none;
+            line-height:1.7;
+        }
+        .difficulty-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom:14px;
+        }
+        .difficulty-btn {
+            flex: 1;
+            padding: 12px 8px;
+            text-align: center;
+            background-color: rgba(240, 243, 250,0.7);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.22s ease;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #444;
+            box-shadow:0 3px 6px rgba(0,40,80,0.1);
+        }
+        .difficulty-btn:hover{
+            transform: translateY(-2px);
+            box-shadow:0 6px 10px rgba(0,40,80,0.16);
+        }
+        .difficulty-btn:active{
+            transform: translateY(1px);
+        }
+        .difficulty-btn.active {
+            background-color: #0288d1;
+            color: white;
+            box-shadow:0 6px 12px rgba(2,136,209,0.35);
+        }
+        .count-set-wrap{
+            display:flex;
+            align-items:center;
+            gap:10px;
+        }
+        .count-set-wrap label{
+            font-size:1.05rem;
+            color:#222;
+        }
+        .count-set-wrap input[type="number"]{
+            width:120px;
+            padding:10px;
+            font-size:1.05rem;
+            border:2px solid #d0dceb;
+            border-radius:8px;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 6px;
+        }
+        .stat-item { text-align: center; }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #01579b;
+        }
+        .stat-label {
+            font-size: 0.95rem;
+            color: #2c5278;
+        }
+        .rules {
+            font-size: 1.02rem;
+            line-height: 1.75;
+        }
+        .rules h3 {
+            margin: 10px 0 6px 0;
+            color: #01579b;
+            font-size: 1.1rem;
+        }
+        .rules h3:first-child { margin-top: 0; }
+        .rules p.indent-p{
+            padding-left:1.4rem;
+            margin-bottom:6px;
+        }
+        .rules p, .rules ul {
+            margin-bottom: 6px;
+        }
+        .rules ul {
+            padding-left: 22px;
+        }
+        .rules li { margin-bottom: 4px; list-style:none;}
+        .tag {
+            display: inline-block;
+            background: rgba(227, 236, 255,0.85);
+            color: #01579b;
+            font-size: 0.85rem;
+            padding: 2px 10px;
+            border-radius: 999px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        .chart-wrap{
+            width:100%;
+            height:180px;
+            position:relative;
+            margin-top:10px;
+        }
+        .chart-canvas{
+            width:100%;
+            height:100%;
+        }
+        .wrong-item{
+            padding:10px;
+            background:#fff;
+            border-radius:8px;
+            margin:8px 0;
+            border-left:4px solid #d9534f;
+        }
+        .medal-wrap{
+            display:flex;
+            gap:12px;
+            flex-wrap:wrap;
+            margin-top:10px;
+        }
+        .medal{
+            flex:1;
+            min-width:0;
+            text-align:center;
+            padding:12px 6px;
+            background:#ffffff;
+            border-radius:8px;
+            border:1px solid #cce0f5;
+        }
+        .medal.unlock{
+            background:#e8f4fc;
+            border-color:#0288d1;
+        }
+        .medal-icon{
+            font-size:2.2rem;
+            opacity:0.25;
+        }
+        .medal.unlock .medal-icon{
+            opacity:1;
+        }
+        .medal-name{
+            font-size:0.88rem;
+            margin-top:6px;
+            color:#2c5278;
+        }
+        .collapsible-content{
+            margin-top:12px;
+            display:none;
+        }
+        @media (max-width: 980px) {
+            .content { flex-direction: column; }
+            .choices { grid-template-columns: 1fr; }
+            .medal-wrap{
+                flex-direction:column;
+            }
+            .difficulty-selector{
+                flex-direction:column;
+            }
+            .count-set-wrap{
+                flex-wrap:wrap;
+            }
+        }
+        @media print{
+            body{background:#fff;padding:0;}
+            .container{background:#fff;backdrop-filter:none;box-shadow:none;}
+            header{background:#fff !important;}
+            button,.template-panel,.collapsible-content{display:none !important;}
+            .medal-wrap{display:none;}
+            #fireworkCanvas{display:none !important;}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-brand">应用高等数学 · 第4章 专题训练</div>
+            <div class="header-title-wrap">
+                <h1><span class="title-icon">🧮</span> 不定积分与换元积分法 <span class="title-icon">🧮</span></h1>
+                <p class="subtitle">原函数与不定积分、基本积分公式、第一类换元（凑微分）、简单应用（4.1~4.2）</p>
+            </div>
+        </header>
+        <div class="content">
+            <section class="problem-section">
+                <div class="card">
+                    <canvas id="fireworkCanvas"></canvas>
+                    <h2>🔧 难度设置</h2>
+                    <div class="difficulty-selector">
+                        <div class="difficulty-btn active" data-difficulty="easy">简单（选择题）</div>
+                        <div class="difficulty-btn" data-difficulty="medium">中等（填空题）</div>
+                        <div class="difficulty-btn" data-difficulty="hard">困难（填空题）</div>
+                    </div>
+                    <div class="count-set-wrap">
+                        <label>设置训练总题量：</label>
+                        <input type="number" id="maxCountInput" min="0" value="5" placeholder="0代表不限题量">
+                        <span style="font-size:0.9rem;color:#666;">填0或留空代表无限刷题</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>📝 当前题目 <span class="tag" id="mode-tag">选择</span></h2>
+                    <div class="problem" id="problem-text">点击"下一题"开始练习</div>
+                    <div class="choices" id="choices" style="display:none;"></div>
+                    <input type="text" class="answer-input" id="answer-input"
+                           placeholder="请输入数值答案（保留两位小数，例如：3.63）" style="display:none;">
+                    <div class="buttons">
+                        <button class="submit-btn" id="submit-btn" style="display:none;">提交答案</button>
+                        <button class="hint-btn" id="hint-btn">提示 / 解析</button>
+                        <button class="prev-btn" id="prev-btn" disabled>上一题</button>
+                        <button class="next-btn" id="next-btn">下一题</button>
+                        <button class="template-btn" id="template-btn">显示解题模板</button>
+                        <button class="reset-btn" id="reset-btn">重置统计</button>
+                    </div>
+                    <div class="template-panel" id="template-panel">
+                        <h4>不定积分解题通用模板</h4>
+                        <p>1. 观察被积函数：能否直接套用基本积分公式？（直接积分法）</p>
+                        <p>2. 不能直接套用时，找"函数+导数"搭配，凑微分：$\varphi'(x)\,dx = d\varphi(x)$（第一类换元）</p>
+                        <p>3. 常用凑微分：$x\,dx=\dfrac{1}{2}d(x^2)$，$\dfrac{dx}{x}=d(\ln x)$，$e^x dx=d(e^x)$，$\cos x\,dx=d(\sin x)$</p>
+                        <p>4. 换元 $u=\varphi(x)$ 化成基本公式，积分后必须回代成原变量</p>
+                        <p>5. 结果一律写 $+C$，可求导验证：$\left(\int f(x)dx\right)'=f(x)$</p>
+                        <p><strong>易错提醒：</strong>丢常数 $C$；$\int \frac{1}{x}dx=\ln|x|+C$ 丢绝对值；凑微分时系数丢失（$\int \cos 2x\,dx=\frac{1}{2}\sin 2x+C$，不是 $\sin 2x+C$）。</p>
+                    </div>
+                    <div class="result" id="result"></div>
+                </div>
+                <div class="card">
+                    <h2>📊 答题概览</h2>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="total-questions">0</div>
+                            <div class="stat-label">总题数</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="correct-answers">0</div>
+                            <div class="stat-label">正确</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="accuracy">0%</div>
+                            <div class="stat-label">正确率</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>📈 个人练习趋势</h2>
+                    <div class="chart-wrap">
+                        <canvas id="accChart" class="chart-canvas"></canvas>
+                    </div>
+                    <div style="margin-top:8px;font-size:0.92rem;color:#444;">记录每一题完成后的正确率变化曲线</div>
+                </div>
+                <div class="card">
+                    <h2>🏆 练习勋章</h2>
+                    <div class="medal-wrap">
+                        <div class="medal" id="medal1">
+                            <div class="medal-icon">🎯</div>
+                            <div class="medal-name">初试牛刀（5题）</div>
+                        </div>
+                        <div class="medal" id="medal2">
+                            <div class="medal-icon">⭐</div>
+                            <div class="medal-name">稳步前进（15题）</div>
+                        </div>
+                        <div class="medal" id="medal3">
+                            <div class="medal-icon">🏅</div>
+                            <div class="medal-name">积分能手（30题）</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="controls-section">
+                <div class="card">
+                    <h2>📋 错题记录本</h2>
+                    <div class="wrong-buttons-wrap">
+                        <button class="toggle-btn" id="toggleWrong">展开/收起错题</button>
+                    </div>
+                    <div class="collapsible-content" id="wrongWrap">
+                        <div id="wrongList"></div>
+                        <div id="wrongEmpty" style="margin-top:10px;color:#666;">暂无错题</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>📖 知识要点</h2>
+                    <div class="rules">
+                        <h3>1. 原函数与不定积分</h3>
+                        <ul>
+                            <li>若 $F'(x)=f(x)$，则 $F(x)$ 是 $f(x)$ 的一个原函数</li>
+                            <li>不定积分：$\displaystyle\int f(x)dx=F(x)+C$（$C$ 为任意常数）</li>
+                            <li>连续函数必有原函数；任意两个原函数只差一个常数</li>
+                        </ul>
+                        <h3>2. 基本积分公式（4.1）</h3>
+                        <ul>
+                            <li>$\displaystyle\int x^{\mu}\,dx=\dfrac{x^{\mu+1}}{\mu+1}+C$（$\mu\neq-1$）</li>
+                            <li>$\displaystyle\int\dfrac{1}{x}dx=\ln|x|+C$</li>
+                            <li>$\displaystyle\int e^x dx=e^x+C$，$\displaystyle\int a^x dx=\dfrac{a^x}{\ln a}+C$</li>
+                            <li>$\displaystyle\int\sin x\,dx=-\cos x+C$，$\displaystyle\int\cos x\,dx=\sin x+C$</li>
+                            <li>$\displaystyle\int\sec^2 x\,dx=\tan x+C$，$\displaystyle\int\csc^2 x\,dx=-\cot x+C$</li>
+                            <li>$\displaystyle\int\dfrac{dx}{1+x^2}=\arctan x+C$，$\displaystyle\int\dfrac{dx}{\sqrt{1-x^2}}=\arcsin x+C$</li>
+                        </ul>
+                        <h3>3. 常用凑微分（4.2 第一类换元）</h3>
+                        <ul>
+                            <li>$x\,dx=\dfrac{1}{2}d(x^2)=\dfrac{1}{2a}d(ax^2+b)$</li>
+                            <li>$\dfrac{1}{\sqrt{x}}dx=2d(\sqrt{x})$</li>
+                            <li>$\dfrac{1}{x}dx=d(\ln|x|)$</li>
+                            <li>$e^x dx=d(e^x)$</li>
+                            <li>$\cos x\,dx=d(\sin x)$，$\sin x\,dx=-d(\cos x)$</li>
+                            <li>$\sec^2 x\,dx=d(\tan x)$</li>
+                        </ul>
+                        <h3>4. 解题步骤</h3>
+                        <ul>
+                            <li>（1）判断能否直接套基本公式</li>
+                            <li>（2）找"被积函数 = 外函数 × 内函数导数"的结构，凑微分</li>
+                            <li>（3）换元积分，回代原变量，结果写 $+C$</li>
+                            <li>（4）对结果求导验证是否等于被积函数</li>
+                        </ul>
+                        <h3>5. 易错点提醒</h3>
+                        <ul>
+                            <li>❌ 结果忘写 $+C$</li>
+                            <li>❌ $\int\frac{1}{x}dx$ 丢绝对值写成 $\ln x+C$</li>
+                            <li>❌ 凑微分时系数丢失：$\int\cos 2x\,dx\neq\sin 2x+C$</li>
+                            <li>❌ 幂函数公式中 $\mu=-1$ 时仍套幂函数公式（应为 $\ln|x|$）</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <script>
+        function shuffle(arr) {
+            const a = arr.slice();
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+        const problemGenerator = {
+            easy: [
+                ()=>({
+                    tag:"换元思想",
+                    question:"设 $\\int f(x)dx=F(x)+C$，则 $\\int f(2x)dx=$（　）",
+                    choices:["$\\dfrac{1}{2}F(2x)+C$","$F(2x)+C$","$2F(2x)+C$","$F\\left(\\dfrac{x}{2}\\right)+C$"],
+                    answer:"$\\dfrac{1}{2}F(2x)+C$",
+                    solution:"令 $u=2x$，则 $dx=\\dfrac{1}{2}du$，$\\int f(2x)dx=\\dfrac{1}{2}\\int f(u)du=\\dfrac{1}{2}F(2x)+C$。这正是凑微分的核心：系数要与内函数导数配套。"
+                }),
+                ()=>({
+                    tag:"基本公式",
+                    question:"$\\int \\sec^2 x\\,dx=$（　）",
+                    choices:["$\\tan x+C$","$\\cot x+C$","$\\sec x+C$","$\\sec x\\tan x+C$"],
+                    answer:"$\\tan x+C$",
+                    solution:"基本积分公式：$(\\tan x)'=\\sec^2 x$，故 $\\int\\sec^2 x\\,dx=\\tan x+C$。"
+                }),
+                ()=>({
+                    tag:"基本公式·易错",
+                    question:"$\\int \\dfrac{1}{x}dx=$（　）",
+                    choices:["$\\ln|x|+C$","$\\ln x+C$","$\\dfrac{1}{x^2}+C$","$-\\dfrac{1}{x^2}+C$"],
+                    answer:"$\\ln|x|+C$",
+                    solution:"$x$ 可正可负，必须写 $\\ln|x|+C$。丢绝对值是高频错误：当 $x<0$ 时 $\\ln x$ 无意义。"
+                }),
+                ()=>({
+                    tag:"凑微分系数",
+                    question:"$\\int \\cos 2x\\,dx=$（　）",
+                    choices:["$\\dfrac{1}{2}\\sin 2x+C$","$\\sin 2x+C$","$2\\sin 2x+C$","$-\\dfrac{1}{2}\\sin 2x+C$"],
+                    answer:"$\\dfrac{1}{2}\\sin 2x+C$",
+                    solution:"$\\int\\cos 2x\\,dx=\\dfrac{1}{2}\\int\\cos 2x\\,d(2x)=\\dfrac{1}{2}\\sin 2x+C$。求导验证：$\\left(\\dfrac{1}{2}\\sin 2x\\right)'=\\cos 2x$ ✓"
+                }),
+                ()=>({
+                    tag:"凑微分形式",
+                    question:"下列凑微分正确的是（　）",
+                    choices:["$x\\,dx=\\dfrac{1}{2}d(x^2)$","$x\\,dx=d(x^2)$","$dx=d(x^2)$","$x\\,dx=2d(x^2)$"],
+                    answer:"$x\\,dx=\\dfrac{1}{2}d(x^2)$",
+                    solution:"因为 $d(x^2)=2x\\,dx$，所以 $x\\,dx=\\dfrac{1}{2}d(x^2)$。凑微分前先问：$d(x^2)$ 展开是什么？"
+                }),
+                ()=>({
+                    tag:"指数函数",
+                    question:"$\\int e^{3x}dx=$（　）",
+                    choices:["$\\dfrac{1}{3}e^{3x}+C$","$e^{3x}+C$","$3e^{3x}+C$","$\\dfrac{1}{3}e^{3x}$"],
+                    answer:"$\\dfrac{1}{3}e^{3x}+C$",
+                    solution:"$\\int e^{3x}dx=\\dfrac{1}{3}\\int e^{3x}\\,d(3x)=\\dfrac{1}{3}e^{3x}+C$。注意 D 选项丢了常数 $C$，不定积分结果必须含 $C$。"
+                }),
+                ()=>({
+                    tag:"原函数概念",
+                    question:"下列函数中，是 $f(x)=2x$ 的原函数的是（　）",
+                    choices:["$x^2+1$","$x^3$","$2x^2$","$\\dfrac{x^2}{2}$"],
+                    answer:"$x^2+1$",
+                    solution:"原函数要求求导后等于 $2x$：$(x^2+1)'=2x$ ✓；$(x^3)'=3x^2$ ✗；$(2x^2)'=4x$ ✗；$\\left(\\dfrac{x^2}{2}\\right)'=x$ ✗。"
+                })
+            ],
+            medium:[
+                ()=>{
+                    return {
+                        tag:"原函数求值",
+                        question:`【<strong>原函数</strong>】设 $F'(x)=2x$ 且 $F(1)=3$，求 $F(3)$ 的值。`,
+                        answer:11,
+                        solution:`$F(x)=\\int 2x\\,dx=x^2+C$；由 $F(1)=1+C=3$ 得 $C=2$；故 $F(x)=x^2+2$，$F(3)=9+2=11$。`
+                    }
+                },
+                ()=>{
+                    return {
+                        tag:"曲线应用",
+                        question:`【<strong>曲线方程</strong>】一曲线经过点 $(1,3)$，且曲线上任意点处的切线斜率为 $3x^2$，求该曲线在 $x=2$ 处的纵坐标 $y$。`,
+                        answer:10,
+                        solution:`$y=\\int 3x^2\\,dx=x^3+C$；过点 $(1,3)$：$3=1+C$，得 $C=2$；所以 $y=x^3+2$，$y(2)=8+2=10$。`
+                    }
+                },
+                ()=>{
+                    return {
+                        tag:"由积分式求导",
+                        question:`【<strong>不定积分定义</strong>】已知 $\\int f(x)dx=\\dfrac{x^3}{3}+C$，求 $f(2)$ 的值。`,
+                        answer:4,
+                        solution:`不定积分与求导互逆：$f(x)=\\left(\\dfrac{x^3}{3}\\right)'=x^2$，所以 $f(2)=4$。`
+                    }
+                },
+                ()=>{
+                    return {
+                        tag:"运动学应用",
+                        question:`【<strong>变速运动</strong>】一列车在直线轨道上做变速运动，速度 $v(t)=2t+3$（m/s），求从 $t=0$ 到 $t=3$（s）走过的位移 $s$（米）。`,
+                        answer:18,
+                        solution:`由 $s'(t)=v(t)$ 得 $s(t)=\\int(2t+3)dt=t^2+3t+C$；位移 $=s(3)-s(0)=(9+9)-0=18$ 米。`
+                    }
+                },
+                ()=>{
+                    return {
+                        tag:"指数原函数",
+                        question:`【<strong>原函数</strong>】设 $F'(x)=e^x$ 且 $F(0)=1$，求 $F(\\ln 2)$ 的值。`,
+                        answer:2,
+                        solution:`$F(x)=\\int e^x dx=e^x+C$；由 $F(0)=e^0+C=1$ 得 $C=0$；故 $F(\\ln 2)=e^{\\ln 2}=2$。`
+                    }
+                },
+                ()=>{
+                    return {
+                        tag:"组合求导",
+                        question:`【<strong>不定积分定义</strong>】已知 $\\int f(x)dx=x^3+x^2+C$，求 $f(1)$ 的值。`,
+                        answer:5,
+                        solution:`$f(x)=(x^3+x^2)'=3x^2+2x$，所以 $f(1)=3+2=5$。`
+                    }
+                }
+            ],
+            hard:[
+                ()=>{
+                    return {
+                        tag:"轨道交通·制动",
+                        question:`【<strong>列车制动</strong>】列车以 $72$ km/h（即 $20$ m/s）进站，开始匀减速制动，加速度为 $-2$ m/s²。求从开始制动到列车停止走过的距离 $s$（米）。`,
+                        answer:100,
+                        solution:`$v(t)=20-2t$，令 $v=0$ 得 $t=10$ s；$s(t)=\\int(20-2t)dt=20t-t^2$；$s(10)=200-100=100$ 米。先积分求速度、再积分求位移——这是定积分应用的伏笔。`
+                    }
+                },
+                ()=>{
+                    return {
+                        tag:"换元综合",
+                        question:`【<strong>凑微分</strong>】设 $F'(x)=2xe^{x^2}$ 且 $F(0)=1$，求 $F(1)$ 的值。（保留两位小数）`,
+                        answer:2.72,
+                        tol:0.03,
+                        solution:`$\\int 2xe^{x^2}dx=\\int e^{x^2}\\,d(x^2)=e^{x^2}+C$（凑微分 $2x\\,dx=d(x^2)$）；由 $F(0)=e^0+C=1$ 得 $C=0$；$F(1)=e\\approx 2.72$。`
+                    }
+                },
+                ()=>{
+                    return {
+                        tag:"负指数",
+                        question:`【<strong>原函数</strong>】设 $F'(x)=e^{-x}$ 且 $F(0)=3$，求 $F(1)$ 的值。（保留两位小数）`,
+                        answer:3.63,
+                        tol:0.03,
+                        solution:`$F(x)=\\int e^{-x}dx=-e^{-x}+C$（注意负号！求导验证：$(-e^{-x})'=e^{-x}$ ✓）；由 $F(0)=-1+C=3$ 得 $C=4$；$F(1)=4-e^{-1}\\approx 4-0.37=3.63$。`
+                    }
+                },
+                ()=>{
+                    return {
+                        tag:"复合凑微分",
+                        question:`【<strong>凑微分</strong>】设 $F'(x)=x\\cos(x^2)$ 且 $F(0)=0.5$，求 $F(\\sqrt{\\pi})$ 的值。`,
+                        answer:0.5,
+                        tol:0.03,
+                        solution:`$\\int x\\cos(x^2)dx=\\dfrac{1}{2}\\int\\cos(x^2)\\,d(x^2)=\\dfrac{1}{2}\\sin(x^2)+C$；由 $F(0)=0+C=0.5$ 得 $C=0.5$；$F(\\sqrt{\\pi})=\\dfrac{1}{2}\\sin\\pi+0.5=0.5$。`
+                    }
+                },
+                ()=>{
+                    return {
+                        tag:"对数求导",
+                        question:`【<strong>不定积分定义</strong>】已知 $\\int f(x)dx=x\\ln x+C$（$x>0$），求 $f(e)$ 的值。（保留两位小数）`,
+                        answer:2,
+                        tol:0.03,
+                        solution:`$f(x)=(x\\ln x)'=\\ln x+1$（乘积求导），所以 $f(e)=\\ln e+1=1+1=2$。`
+                    }
+                },
+                ()=>{
+                    return {
+                        tag:"配方与凑微分",
+                        question:`【<strong>综合</strong>】已知 $\\displaystyle\\int\\dfrac{dx}{x^2+4x+5}=\\arctan(x+2)+C$，设 $F(x)$ 为其一个原函数，求 $F(0)-F(-2)$ 的值。（保留两位小数）`,
+                        answer:1.11,
+                        tol:0.03,
+                        solution:`$x^2+4x+5=(x+2)^2+1$，凑微分 $d(x+2)=dx$；$F(0)=\\arctan 2\\approx 1.1071$，$F(-2)=\\arctan 0=0$；$F(0)-F(-2)\\approx 1.11$。`
+                    }
+                }
+            ]
+        };
+        const state = {
+            currentProblem: null,
+            currentDifficulty: 'easy',
+            totalQuestions: 0,
+            correctAnswers: 0,
+            wrongList:[],
+            accHistory:[],
+            history:[],
+            historyIndex:-1,
+            usedProblemIndexSet:new Set()
+        };
+        const problemText = document.getElementById('problem-text');
+        const choicesBox = document.getElementById('choices');
+        const answerInput = document.getElementById('answer-input');
+        const submitBtn = document.getElementById('submit-btn');
+        const hintBtn = document.getElementById('hint-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const templateBtn = document.getElementById('template-btn');
+        const templatePanel = document.getElementById('template-panel');
+        const resetBtn = document.getElementById('reset-btn');
+        const toggleWrongBtn = document.getElementById('toggleWrong');
+        const wrongWrap = document.getElementById('wrongWrap');
+        const wrongListDom = document.getElementById('wrongList');
+        const wrongEmptyDom = document.getElementById('wrongEmpty');
+        const resultDiv = document.getElementById('result');
+        const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+        const maxCountInput = document.getElementById('maxCountInput');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const accuracyEl = document.getElementById('accuracy');
+        const modeTag = document.getElementById('mode-tag');
+        const fireworkCanvas = document.getElementById('fireworkCanvas');
+        const fwCtx = fireworkCanvas.getContext('2d');
+        let accChart=null;
+        let fireworkParticles = [];
+        function resizeFireworkCanvas(){
+            const rect = fireworkCanvas.parentElement.getBoundingClientRect();
+            fireworkCanvas.width = rect.width;
+            fireworkCanvas.height = 260;
+        }
+        resizeFireworkCanvas();
+        window.addEventListener('resize',resizeFireworkCanvas);
+        function createFirework(x,y){
+            const colors=['#ff4444','#ffbb33','#00C851','#33b5e5','#aa66cc'];
+            const count=80;
+            for(let i=0;i<count;i++){
+                const angle = Math.PI*2/count*i;
+                const speed = 2+Math.random()*3;
+                fireworkParticles.push({
+                    x:x,
+                    y:y,
+                    vx:Math.cos(angle)*speed,
+                    vy:Math.sin(angle)*speed,
+                    alpha:1,
+                    color:colors[Math.floor(Math.random()*colors.length)]
+                })
+            }
+        }
+        function runFireworkLoop(){
+            fwCtx.clearRect(0,0,fireworkCanvas.width,fireworkCanvas.height);
+            for(let i=fireworkParticles.length-1;i>=0;i--){
+                const p = fireworkParticles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy +=0.08;
+                p.alpha -=0.018;
+                if(p.alpha <=0){
+                    fireworkParticles.splice(i,1);
+                    continue;
+                }
+                fwCtx.beginPath();
+                fwCtx.arc(p.x,p.y,2.5,0,Math.PI*2);
+                fwCtx.fillStyle = p.color;
+                fwCtx.globalAlpha = p.alpha;
+                fwCtx.fill();
+                fwCtx.globalAlpha=1;
+            }
+            if(fireworkParticles.length>0){
+                requestAnimationFrame(runFireworkLoop);
+            }else{
+                fireworkCanvas.style.display='none';
+            }
+        }
+        function startThreeFirework(){
+            fireworkCanvas.style.display='block';
+            fireworkParticles = [];
+            const cx = fireworkCanvas.width/2;
+            const cy = fireworkCanvas.height*0.45;
+            setTimeout(()=>{createFirework(cx,cy);runFireworkLoop();},0);
+            setTimeout(()=>{createFirework(cx*0.4,cy*0.6);},800);
+            setTimeout(()=>{createFirework(cx*1.6,cy*0.55);},1600);
+        }
+        function renderMath(root) {
+            if (window.renderMathInElement) {
+                renderMathInElement(root, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+        function initChart(){
+            const ctx = document.getElementById('accChart').getContext('2d');
+            accChart = new Chart(ctx,{
+                type:'line',
+                data:{
+                    labels:[],
+                    datasets:[{
+                        label:'累计正确率%',
+                        data:[],
+                        borderColor:'#0288d1',
+                        backgroundColor:'rgba(2,136,209,0.12)',
+                        fill:true,
+                        tension:0.25
+                    }]
+                },
+                options:{
+                    responsive:true,
+                    maintainAspectRatio:false,
+                    scales:{
+                        y:{min:0,max:100,title:{display:true,text:"正确率%"}},
+                        x:{title:{display:true,text:"答题序号"}}
+                    },
+                    plugins:{legend:{position:'top'}}
+                }
+            });
+        }
+        function updateChart(){
+            if(!accChart) return;
+            accChart.data.labels = state.accHistory.map((_,idx)=>idx+1);
+            accChart.data.datasets[0].data = state.accHistory;
+            accChart.update();
+        }
+        function renderWrongList(){
+            if(state.wrongList.length===0){
+                wrongEmptyDom.style.display='block';
+                wrongListDom.innerHTML='';
+            }else{
+                wrongEmptyDom.style.display='none';
+                let html='';
+                state.wrongList.forEach((item,idx)=>{
+                    html+=`<div class="wrong-item">
+                    <div><strong>错题${idx+1}</strong></div>
+                    <div>${item.question}</div>
+                    <div style="margin-top:6px;font-size:0.94rem;">解析：${item.solution}</div>
+                    </div>`;
+                });
+                wrongListDom.innerHTML=html;
+            }
+            renderMath(wrongListDom);
+        }
+        function checkMedal(){
+            const m1=document.getElementById('medal1');
+            const m2=document.getElementById('medal2');
+            const m3=document.getElementById('medal3');
+            if(state.totalQuestions>=5) m1.classList.add('unlock');
+            else m1.classList.remove('unlock');
+            if(state.totalQuestions>=15) m2.classList.add('unlock');
+            else m2.classList.remove('unlock');
+            if(state.totalQuestions>=30) m3.classList.add('unlock');
+            else m3.classList.remove('unlock');
+        }
+        function updatePrevButton(){
+            if(state.historyIndex>0){
+                prevBtn.disabled=false;
+            }else{
+                prevBtn.disabled=true;
+            }
+        }
+        function loadHistoryItem(index){
+            const item = state.history[index];
+            state.historyIndex = index;
+            state.currentProblem = item.problem;
+            problemText.style.opacity=0;
+            resultDiv.style.display='none';
+            templatePanel.style.display='none';
+            answerInput.classList.remove('input-correct','input-wrong');
+            setTimeout(()=>{
+                problemText.innerHTML = state.currentProblem.question;
+                problemText.style.opacity=1;
+                if(state.currentProblem.choices){
+                    modeTag.textContent="选择";
+                    choicesBox.style.display="grid";
+                    answerInput.style.display="none";
+                    submitBtn.style.display="none";
+                    choicesBox.innerHTML="";
+                    item.choiceSnapshot.forEach(html=>{
+                        const btn = document.createElement('button');
+                        btn.className = html.className;
+                        btn.innerHTML = html.html;
+                        btn.disabled=true;
+                        choicesBox.appendChild(btn);
+                    });
+                }else{
+                    modeTag.textContent="填空";
+                    choicesBox.style.display="none";
+                    answerInput.style.display="block";
+                    submitBtn.style.display="block";
+                    answerInput.value = item.userInput??'';
+                }
+                if(item.showResult){
+                    resultDiv.style.display='block';
+                    resultDiv.className = 'result ' + item.resultType;
+                    resultDiv.innerHTML = item.resultHtml;
+                    renderMath(resultDiv);
+                }
+                renderMath(document.body);
+                updatePrevButton();
+            },220);
+        }
+        function init() {
+            setupEventListeners();
+            generateProblem();
+            updateStats();
+            initChart();
+            renderMath(document.body);
+            updatePrevButton();
+        }
+        function setupEventListeners() {
+            submitBtn.addEventListener('click', checkAnswer);
+            hintBtn.addEventListener('click', showHint);
+            nextBtn.addEventListener('click', generateProblem);
+            prevBtn.addEventListener('click',()=>{
+                if(state.historyIndex>0){
+                    state.historyIndex -=1;
+                    loadHistoryItem(state.historyIndex);
+                }
+            });
+            // 选择题事件委托
+            choicesBox.addEventListener('click',(ev)=>{
+                const btn = ev.target;
+                if(!btn.classList.contains('choice-btn')) return;
+                if(btn.disabled) return;
+                const userText = btn.innerHTML.trim();
+                const correctText = state.currentProblem.answer.trim();
+                const isOk = (userText === correctText);
+                checkChoice(btn,isOk);
+            });
+            templateBtn.addEventListener('click',()=>{
+                templatePanel.style.display = templatePanel.style.display==='block' ? 'none' : 'block';
+            });
+            resetBtn.addEventListener('click',()=>{
+                state.totalQuestions=0;
+                state.correctAnswers=0;
+                state.wrongList=[];
+                state.accHistory=[];
+                state.history=[];
+                state.historyIndex=-1;
+                state.usedProblemIndexSet.clear();
+                updateStats();
+                updateChart();
+                renderWrongList();
+                checkMedal();
+                updatePrevButton();
+                problemText.innerText="点击\"下一题\"开始练习";
+                resultDiv.style.display="none";
+                choicesBox.style.display="none";
+                answerInput.style.display="none";
+                submitBtn.style.display="none";
+                answerInput.classList.remove('input-correct','input-wrong');
+            });
+            toggleWrongBtn.addEventListener('click',()=>{
+                if(wrongWrap.style.display==='block'){
+                    wrongWrap.style.display='none';
+                    toggleWrongBtn.classList.remove('active');
+                }else{
+                    wrongWrap.style.display='block';
+                    toggleWrongBtn.classList.add('active');
+                }
+                renderWrongList();
+            });
+            answerInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') checkAnswer();
+            });
+            difficultyBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    difficultyBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    state.currentDifficulty = btn.dataset.difficulty;
+                    state.usedProblemIndexSet.clear();
+                    generateProblem();
+                });
+            });
+        }
+        function getMaxTrainCount(){
+            const v = Number(maxCountInput.value);
+            if(isNaN(v)||v<=0) return 0;
+            return v;
+        }
+        function generateProblem() {
+            const maxNum = getMaxTrainCount();
+            if(maxNum>0 && state.totalQuestions >= maxNum){
+                problemText.innerHTML = `<strong>🎉恭喜你！已到达设定训练题量${maxNum}，训练完成！</strong>`;
+                resultDiv.style.display="none";
+                choicesBox.style.display="none";
+                answerInput.style.display="none";
+                submitBtn.style.display="none";
+                startThreeFirework();
+                return;
+            }
+            const pool = problemGenerator[state.currentDifficulty];
+            const totalPoolLen = pool.length;
+            let availableIndexes = [];
+            for(let i=0;i<totalPoolLen;i++){
+                if(!state.usedProblemIndexSet.has(i)){
+                    availableIndexes.push(i);
+                }
+            }
+            if(availableIndexes.length ===0){
+                problemText.innerHTML = `<strong>⚠️本难度题目已全部做完，请切换难度或者重置统计</strong>`;
+                resultDiv.style.display="none";
+                choicesBox.style.display="none";
+                answerInput.style.display="none";
+                submitBtn.style.display="none";
+                return;
+            }
+            const randIdx = availableIndexes[Math.floor(Math.random()*availableIndexes.length)];
+            state.usedProblemIndexSet.add(randIdx);
+            const fn = pool[randIdx];
+            state.currentProblem = fn();
+            state.historyIndex +=1;
+            if(state.history.length > state.historyIndex){
+                state.history.length = state.historyIndex;
+            }
+            state.history.push({
+                problem:state.currentProblem,
+                choiceSnapshot:[],
+                userInput:'',
+                showResult:false,
+                resultType:'',
+                resultHtml:''
+            });
+            renderProblem();
+        }
+        function renderProblem() {
+            const p = state.currentProblem;
+            problemText.style.opacity = 0;
+            resultDiv.style.display = 'none';
+            templatePanel.style.display='none';
+            answerInput.classList.remove('input-correct','input-wrong');
+            setTimeout(()=>{
+                problemText.innerHTML = p.question;
+                problemText.style.opacity = 1;
+                if (p.choices) {
+                    modeTag.textContent = '选择';
+                    choicesBox.style.display = 'grid';
+                    answerInput.style.display = 'none';
+                    submitBtn.style.display = 'none';
+                    const opts = shuffle(
+                        p.choices.map(c => ({text: c, isAnswer: c === p.answer}))
+                    );
+                    choicesBox.innerHTML = '';
+                    opts.forEach(opt => {
+                        const btn = document.createElement('button');
+                        btn.className = 'choice-btn';
+                        btn.innerHTML = opt.text;
+                        btn.onclick = () => checkChoice(btn, opt.isAnswer);
+                        choicesBox.appendChild(btn);
+                    });
+                    state.history[state.historyIndex].choiceSnapshot = Array.from(choicesBox.children).map(b=>({className:b.className,html:b.innerHTML}));
+                } else {
+                    modeTag.textContent = '填空';
+                    choicesBox.style.display = 'none';
+                    answerInput.style.display = 'block';
+                    submitBtn.style.display = 'block';
+                    answerInput.value = '';
+                    answerInput.focus();
+                    state.history[state.historyIndex].userInput='';
+                }
+                renderMath(document.body);
+                updatePrevButton();
+            },220);
+        }
+        function saveHistorySnapshot(resultType,resultHtml){
+            const rec = state.history[state.historyIndex];
+            rec.showResult=true;
+            rec.resultType = resultType;
+            rec.resultHtml = resultHtml;
+            if(state.currentProblem.choices){
+                rec.choiceSnapshot = Array.from(choicesBox.children).map(b=>({className:b.className,html:b.innerHTML}));
+            }else{
+                rec.userInput = answerInput.value.trim();
+            }
+        }
+        function afterScore(isRight){
+            const acc = state.totalQuestions>0 ? Math.round(state.correctAnswers/state.totalQuestions*100):0;
+            state.accHistory.push(acc);
+            if(!isRight){
+                state.wrongList.push({
+                    question:state.currentProblem.question,
+                    solution:state.currentProblem.solution
+                });
+            }
+            updateStats();
+            updateChart();
+            renderWrongList();
+            checkMedal();
+        }
+        function checkChoice(btn, isAnswer) {
+            state.totalQuestions++;
+            if (isAnswer) {
+                btn.classList.add('correct-choice');
+                state.correctAnswers++;
+                showResult('correct', '回答正确！', state.currentProblem.solution);
+            } else {
+                btn.classList.add('incorrect-choice');
+                [...choicesBox.children].forEach(b => {
+                    if (b.innerHTML === state.currentProblem.answer) {
+                        b.classList.add('correct-choice');
+                    }
+                });
+                showResult('incorrect', '回答错误。', state.currentProblem.solution);
+            }
+            [...choicesBox.children].forEach(b => b.disabled = true);
+            const html = resultDiv.innerHTML;
+            const type = resultDiv.className.replace('result ','');
+            saveHistorySnapshot(type,html);
+            afterScore(isAnswer);
+        }
+        function checkAnswer() {
+            const p = state.currentProblem;
+            if (!p || p.choices) return;
+            const userVal = parseFloat(answerInput.value.trim());
+            const correctVal = p.answer;
+            state.totalQuestions++;
+            let ok = false;
+            const tol = p.tol || 0.03;
+            if (!isNaN(userVal) && Math.abs(userVal - correctVal) < tol) {
+                ok=true;
+                state.correctAnswers++;
+                answerInput.classList.add('input-correct');
+                showResult('correct', '回答正确！', p.solution);
+            } else {
+                answerInput.classList.add('input-wrong');
+                const disp = Number.isInteger(correctVal) ? correctVal : correctVal.toFixed(2);
+                showResult('incorrect', `回答错误。正确答案：${disp}`, p.solution);
+            }
+            const html = resultDiv.innerHTML;
+            const type = resultDiv.className.replace('result ','');
+            saveHistorySnapshot(type,html);
+            afterScore(ok);
+        }
+        function showHint() {
+            if (!state.currentProblem) return;
+            showResult('hint', '提示 / 解析', state.currentProblem.solution);
+        }
+        function showResult(type, title, content) {
+            resultDiv.className = 'result ' + type;
+            resultDiv.innerHTML = `<strong>${title}</strong><br><span>${content}</span>`;
+            resultDiv.style.display = 'block';
+            renderMath(resultDiv);
+        }
+        function updateStats() {
+            totalQuestionsEl.textContent = state.totalQuestions;
+            correctAnswersEl.textContent = state.correctAnswers;
+            const acc = state.totalQuestions > 0
+                ? Math.round(state.correctAnswers / state.totalQuestions * 100)
+                : 0;
+            accuracyEl.textContent = `${acc}%`;
+        }
+        window.addEventListener('load', () => {
+            init();
+        });
+    </script>
+</body>
+</html>
